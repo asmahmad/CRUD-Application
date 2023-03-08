@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th= "https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>welcome</title>
+
+</head>
+<body>
+	<h1>Welcome!</h1>
+	<div th:each ="storedPerson : ${people}">	
+		<span th:inline="text">
+			Person#[[${storedPerson.ID}]] : <a th:href ="@{persons/{personId}(personId=${storedPerson.ID})}"> [[${storedPerson.firstName}]] [[${storedPerson.lastName}]] </a>
+		</span>
+	</div>
+	<hr/>
+	<form action="" method= "post">	
+			<input type = "hidden" th:field = "${person.ID}">
+		<div>		
+			<label> First Name: </label>	
+			<input type = "text" th:field = "${person.firstName}">
+		</div>
+		<div>	
+			<label> Last Name: </label>		
+			<input type = "text" th:field = "${person.lastName}">
+		</div>
+		<div> 
+			<a href = "/persons" th:if="${personId != null}" > Back </a>
+			<button> Submit </button>	
+		</div>
+	</form>
+		
+	<form th:action="@{/persons/{personId}/delete(personId=${person.ID})}" method = "post" th:if = "${person.ID != null}">
+		<button> Delete</button>
+	</form>
+</body>
+</html>
